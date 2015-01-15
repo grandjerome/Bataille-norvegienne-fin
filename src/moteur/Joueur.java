@@ -10,7 +10,8 @@ import java.util.ListIterator;
 import java.util.Scanner;
 
 /**
- * @author Naomi Sakine et Antoine Ladune Classe Joueur qui représente les
+ * @author Naomi Sakine et Antoine Ladune
+ * Classe Joueur qui représente les
  *         joueurs
  */
 public class Joueur {
