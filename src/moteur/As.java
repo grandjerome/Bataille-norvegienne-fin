@@ -9,12 +9,12 @@ import java.util.Scanner;
 import javax.swing.JSpinner.ListEditor;
 
 
+/**
+ * @author Naomi Sakine et Antoine Ladune
+ * Classe As représentant les as
+ */
 public class As extends moteur.CarteSpeciale {
 
-/**
- * @author antoineladune
- * Classe As modÃ©lisant la carte spÃ©ciale As.
- */ 
 	static boolean effetJoue;
 	/**
 	 * Constructeur de la classe As.
