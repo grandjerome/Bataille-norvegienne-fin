@@ -132,20 +132,31 @@ public class As extends moteur.CarteSpeciale {
 		
 		return contre;
 	}
+	
+	/**
+	 * @return
+	 */
 	public int lireClavierInt() {
-		
 		 Scanner sc = new Scanner(System.in);
 		int sortie=sc.nextInt();
 		return(sortie);
 	}
 	
+	/**
+	 * @param sortie
+	 * @param collec
+	 * @throws CarteInexistanteException
+	 */
 	public void controlCarteInexistante(int sortie,Collection collec)throws CarteInexistanteException{
 		if(sortie<0 || sortie>collec.size()){
 			throw new CarteInexistanteException();
 			}
 	}
+	
+	/* (non-Javadoc)
+	 * @see moteur.Carte#toString()
+	 */
 	public String toString(){
-		
 		return("As"+" de "+this.couleur);
 	}
 	
