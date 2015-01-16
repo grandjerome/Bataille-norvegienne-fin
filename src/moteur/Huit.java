@@ -27,20 +27,7 @@ public class Huit extends moteur.CarteSpeciale {
 			Partie.partie.getiIterateurJoueur().next();
 		}
 	}
-	
-	/**
-	 * 
-	 */
-	public void donnerTalon() {
-	}
-	
-	/**
-	 * 
-	 */
-	public void passerTour() {
 
-	}
-	
 	/* (non-Javadoc)
 	 * @see moteur.Carte#toString()
 	 */
