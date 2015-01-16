@@ -22,13 +22,6 @@ public abstract class CarteSpeciale extends moteur.Carte {
 	public CarteSpeciale(){
 	}
 	
-	
-	/**
-	 * Méthode qui pose une carte spéciale
-	 */
-	public void poserCarteSpeciale() {
-
-	}
 	/**
 	 * Méthode abstraite qui joue l'effet d'une carte spéciale, redéfinie dans les classes filles
 	 */
