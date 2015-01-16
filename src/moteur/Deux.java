@@ -21,12 +21,7 @@ public class Deux extends moteur.CarteSpeciale {
 	 */
 	public void jouerEffet() {
 	}
-	
-	/**
-	 * Méthode qui donne le talon
-	 */
-	public void donnerTalon() {
-	}
+
 	
 	/* (non-Javadoc)
 	 * @see moteur.Carte#toString()
