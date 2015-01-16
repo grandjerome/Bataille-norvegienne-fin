@@ -30,5 +30,4 @@ public class Dix extends moteur.CarteSpeciale {
 	public String toString(){
 		return("Dix"+" de "+this.couleur);
 	}
-
 }
