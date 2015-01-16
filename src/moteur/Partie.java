@@ -54,19 +54,6 @@ public class Partie {
 	}
 
 	/**
-	 * 
-	 */
-	public void determinerVainqueur() {
-	}
-
-	/**
-	 * 
-	 */
-	public void finPartie() {
-
-	}
-
-	/**
 	 * @return la liste des joueurs
 	 */
 	public ArrayList<Joueur> getlistJoueur() {
