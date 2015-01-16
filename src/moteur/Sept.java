@@ -23,19 +23,6 @@ public class Sept extends moteur.CarteSpeciale {
 
 	}
 
-	/**
-	 * 
-	 */
-	public void donnerTalon() {
-
-	}
-
-	/**
-	 * 
-	 */
-	public void jouerCarteInferieure() {
-
-	}
 
 	/* (non-Javadoc)
 	 * @see moteur.Carte#toString()
