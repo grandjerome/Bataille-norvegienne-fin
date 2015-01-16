@@ -7,71 +7,68 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- * @author Naomi Sakine et Antoine Ladune Classe qui hérite de Joueur qui
- *         représente les joueurs virtuels
- */
-public class JoueurVirtuel extends Joueur {
-	public String[] nom = { "Roger", "Patrick", "Corentin", "Emilie", "Albert",
-			"Alberta", "Alberte", "Albertine", "Albin", "Alda", "Aldo",
-			"Aldegonde", "Alï¿½the", "Alex", "Alexandra" };
-	static private int indiceNom = 0;
+
+public class JoueurVirtuel extends Joueur{
+
+	
+	
+	public String[] nom={"Roger","Patrick","Corentin","Emilie","Albert","Alberta","Alberte","Albertine","Albin","Alda","Aldo","Aldegonde","Al�the","Alex","Alexandra"};//,Alexandre,Alexandrine,Alexia,Alexiane,Alexis,Aleyde,Alfred,Alfreda,Alice,Alida,Aline,Alix,Alo�s,Aloysius,Alphonse,Alphonsine,Ama�l,Amance,Amand,Amandine,Amoury,Ambroise,Am�d�e,Am�lie,Amos,Ana�s,Anastase,Anastasie,Anatole,Andoche,Andr�,Andr�e,Ange,Ang�le,Ang�line,Ang�lique,Anicet,Anita,Anna,Annabelle,Anne,Annette,Annick,Annie,Annonciade,Anouchka,Anouck,Anselme,Anthelme,Anthony,Antoine,Antoinette,Antonin,Apollinaire,Apolline,Apollos,Arabelle,Arcadius,Arcady,Archibald,Ariane,Arielle,Aristide,Arlette,Armand,Armande,Armel,Armelle,Arnaud,Arnold,Arnould,Ars�ne,Arthur,Astrid,Athanase,Auberi,Aubert,Aubin,Aude,Audrey,Augusta,Auguste,Augustin,Augustine,Aure,Aur�le,Aur�lia,Aur�lie,Aur�lien,Aurore,Ava,Avit,Axel,Axelle,Aymar,Aymeric,Aymone,Babette,Babine,Babita,Balbine,Balthazar,Baptiste,Barbara,Barbe,Barberine,Barnab�,Barnard,Barth�l�my,Bartolom�,Basile,Bastien,Bastienne,Bathilde,Baudouin,B�atrice,Beatrix,B�n�dicte,Benjamin,Benjamine,Beno�t,Beno�te,B�renger};
+	static private int indiceNom=0;
+	
+	
 	private Strategie strategie;
 
-	/**
-	 * Consructeur de la classe JoueurVirtuel, attribue une stratégie au joueur virtuel
-	 */
-	public JoueurVirtuel() {
-		if (indiceNom == 15) {
-			indiceNom = 0;
+	
+	
+	public JoueurVirtuel(){
+		if (indiceNom == 15){
+			indiceNom=0;
 		}
-		super.nomJoueur = nom[indiceNom];
+		super.nomJoueur=nom[indiceNom];
 		indiceNom++;
 		int random = (int) (Math.random() * 2) + 1;
-		if (random == 1) {
-			this.strategie = new StrategieAleatoire();
-		} else {
-			this.strategie = new StrategieLeMeilleurPourLaFin();
-		}
+				if (random == 1) {
+					this.strategie = new StrategieAleatoire();
+				} else {
+					this.strategie = new StrategieLeMeilleurPourLaFin();
+				}
 	}
-
-	/* (non-Javadoc)
-	 * @see moteur.Joueur#echangerCarte()
-	 */
 	public void echangerCarte() {
 		strategie.echangerCarte(this);
 	}
-
-	/**
-	 * @param main
-	 * @return le nombre de cartes jouable dans la main du joueur virtuel
-	 */
-	public int determinernbCartesJouables(ArrayList<Carte> main) {
-		int nbCartesJouables = 0;
+	
+	
+	
+	
+	
+	
+	public int determinernbCartesJouables(ArrayList<Carte> main){
+		int nbCartesJouables=0;
 		ListIterator<Carte> it = super.main.listIterator();
-		while (it.hasNext()) {
+		while (it.hasNext()){
 			Carte element = it.next();
-			if (element.determinerCarteJouable()) {
+			if (element.determinerCarteJouable()){
 				nbCartesJouables++;
-			}
+			}			
 		}
+		//System.out.println("l'ordi peut jouer "+nbCartesJouables+" cartes");
 		return nbCartesJouables;
 	}
+	
+	
 
-	/* (non-Javadoc)
-	 * @see moteur.Joueur#jouerCarte()
-	 * Méthode qui joue une carte
-	 */
-	public void jouerCarte() {
+	
+
+	public void jouerCarte(){
 		strategie.poserCarteStrategique(this);
-
+		
 	}
-
-	/* (non-Javadoc)
-	 * @see moteur.Joueur#toString()
-	 */
-	public String toString() {
-		return ("Joueur Virtuel " + nomJoueur + " ");
+	public Strategie getStrat(){
+		return(this.strategie);
 	}
+	public String toString(){
+		return("Joueur Virtuel "+nomJoueur+" ");
+	}
+	
 
 }

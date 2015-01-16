@@ -5,22 +5,17 @@ import java.util.HashSet;
 import java.util.ListIterator;
 import java.util.Random;
 
-/**
- * @author Naomi Sakine et Antoine Ladune Classe StrategieLeMeilleurPourLaFin,
- *         strtégie qui consiste à jouer en priorité les cartes normales et les
- *         cartes les plus petites possibles
- */
 public class StrategieLeMeilleurPourLaFin implements Strategie {
-
-	/* (non-Javadoc)
-	 * @see moteur.Strategie#poserCarteStrategique(moteur.JoueurVirtuel)
-	 */
+	private JoueurVirtuel jo;
 	public void poserCarteStrategique(JoueurVirtuel j) {
+		this.jo=j;
+		Thread t = new Thread(){
+			public void run(){
 		ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
 		ArrayList<Carte> cartesNormalesJouables = new ArrayList<Carte>();
 		ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
 		Carte carteAPoser;
-		cartesJouables = determinerCartesJouables(j.getmain());
+		cartesJouables = determinerCartesJouables(jo.getmain());
 		if (cartesJouables.size() > 0) {
 			cartesNormalesJouables = determinerCartesNormalesJouables(cartesJouables);
 			carteAPoser = determinerCarteAposer(cartesJouables,
@@ -30,72 +25,90 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 				ListIterator<Joueur> it = Partie.partie.getlistJoueur()
 						.listIterator();
 				Joueur joueurRecupereTalon = it.next();
-				while (joueurRecupereTalon.getNom(joueurRecupereTalon) == j
-						.getNom(j)) {
+				while (joueurRecupereTalon.getNom(joueurRecupereTalon) == jo
+						.getNom(jo)) {
 					joueurRecupereTalon = it.next();
 				}
 				int nbMinCartesEnMain = joueurRecupereTalon.getmain().size();
 				while (it.hasNext()) {
 					Joueur element = it.next();
 					if (element.getmain().size() < nbMinCartesEnMain
-							&& (element.getNom(element) != j.getNom(j))) {
+							&& (element.getNom(element) != jo.getNom(jo))) {
 						nbMinCartesEnMain = element.getmain().size();
 						joueurRecupereTalon = element;
 					}
 				}
-
-				ListIterator<Carte> it2 = cartesAPoser.listIterator();
-				while (it2.hasNext()) {
-					Carte element = it2.next();
-					Partie.partie.getTasDeCarte().getTalon().add(element);
-					j.getmain().remove(element);
+				if(!(joueurRecupereTalon instanceof JoueurVirtuel)){
+					jo.poserCarte(cartesAPoser);
+					Partie.partie.getController().fenetreContreAs();
+//					
 				}
-				if (peutContrerAs(joueurRecupereTalon)) {
-					if (joueurRecupereTalon instanceof Joueur) {
-						As carte = (As) carteAPoser;
-						carte.contreAs(joueurRecupereTalon);
-						Partie.partie.getTasDeCarte().donnerTalon(
-								Partie.partie.getlistJoueur().get(
-										Partie.partie.getlistJoueur().indexOf(
-												joueurRecupereTalon)));
-						System.out.println(joueurRecupereTalon
-								+ " Ã  contrÃ© "
-								+ Partie.partie.getlistJoueur().get(
-										(Partie.partie.getlistJoueur()
-												.indexOf(j))));
-					} else {
-						Carte cartePourcontrer = determinerCartePourContrer(joueurRecupereTalon
-								.getmain());
-						contrerAs(joueurRecupereTalon, j, cartePourcontrer);
-					}
-				} else {
-					Partie.partie.getTasDeCarte().donnerTalon(
-							Partie.partie.getlistJoueur().get(
-									Partie.partie.getlistJoueur().indexOf(
-											joueurRecupereTalon)));
-					System.out.println(j
-							+ " donne le talon Ã  "
-							+ Partie.partie.getlistJoueur().get(
-									(Partie.partie.getlistJoueur()
-											.indexOf(joueurRecupereTalon))));
-					piocher(cartesAPoser.size(), j);
+					
+				else if (peutContrerAs(joueurRecupereTalon)){
+					contreAs(joueurRecupereTalon,jo,cartesAPoser);
+					
+				}else{
+					jo.poserCarte(cartesAPoser);
+					Partie.partie.getTasDeCarte().donnerTalon(joueurRecupereTalon);
+					
 				}
+				}
+//				ListIterator<Carte> it2 = cartesAPoser.listIterator();
+//				while (it2.hasNext()) {
+//					Carte element = it2.next();
+//					Partie.partie.getTasDeCarte().getTalon().add(element);// pose
+//																			// la
+//																			// carte
+//					j.getmain().remove(element);// retire de la main
+//				}
+//				if (peutContrerAs(joueurRecupereTalon)) {
+//					if (joueurRecupereTalon instanceof Joueur) {
+//						As carte = (As) carteAPoser;
+//						carte.contreAs(joueurRecupereTalon);
+//						Partie.partie.getTasDeCarte().donnerTalon(
+//								Partie.partie.getlistJoueur().get(
+//										Partie.partie.getlistJoueur().indexOf(
+//												joueurRecupereTalon)));
+//						System.out.println(joueurRecupereTalon
+//								+ " à contré "
+//								+ Partie.partie.getlistJoueur().get(
+//										(Partie.partie.getlistJoueur()
+//												.indexOf(j))));
+//					} else {// si c'est un joueur virtuel
+//						Carte cartePourcontrer = determinerCartePourContrer(joueurRecupereTalon
+//								.getmain());
+//						contrerAs(joueurRecupereTalon, j, cartePourcontrer);
+//					}
+//				} else {
+//					Partie.partie.getTasDeCarte().donnerTalon(
+//							Partie.partie.getlistJoueur().get(
+//									Partie.partie.getlistJoueur().indexOf(
+//											joueurRecupereTalon)));
+//					System.out.println(j
+//							+ " donne le talon à "
+//							+ Partie.partie.getlistJoueur().get(
+//									(Partie.partie.getlistJoueur()
+//											.indexOf(joueurRecupereTalon))));
+//					piocher(cartesAPoser.size(), j);
+//				}
 
-			}
+		
+
 			else {
-				j.poserCarte(cartesAPoser);
-				piocher(cartesAPoser.size(), j);
+				jo.poserCarte(cartesAPoser);
+				
 			}
+		
 		}
+
 		else {
 			System.out.println("L'ordi ne peut pas jouer!");
-			Partie.partie.getTasDeCarte().donnerTalon(j);
+			Partie.partie.getTasDeCarte().donnerTalon(jo);
 		}
+			}};t.start();
+
 	}
 
-	/* (non-Javadoc)
-	 * @see moteur.Strategie#echangerCarte(moteur.JoueurVirtuel)
-	 */
 	public void echangerCarte(JoueurVirtuel j) {
 		ArrayList<Carte> mainCartesSpeciales = new ArrayList<Carte>();
 		ArrayList<Carte> faceVisibleCartesNormales = new ArrayList<Carte>();
@@ -136,14 +149,11 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 			}
 
 		}
-		System.out.println("aprÃ¨s Ã©change, main : " + j.getmain().toString());
-		System.out.println("aprÃ¨s Ã©change, face visible : "
-				+ j.getfaceVisible().toString());
+		//System.out.println("après échange, main : " + j.getmain().toString());
+		//System.out.println("après échange, face visible : "
+		//		+ j.getfaceVisible().toString());
 	}
 
-	/* (non-Javadoc)
-	 * @see moteur.Strategie#piocher(int, moteur.Joueur)
-	 */
 	public void piocher(int nbCartesPosees, Joueur j) {
 		for (int i = 0; i < nbCartesPosees; i++) {
 			if (j.getmain().size() < 3) {
@@ -152,10 +162,6 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		}
 	}
 
-	/**
-	 * @param main
-	 * @return une arraylist des cartes jouables
-	 */
 	public ArrayList<Carte> determinerCartesJouables(ArrayList<Carte> main) {
 		ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
 		ListIterator<Carte> it = main.listIterator();
@@ -168,11 +174,6 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		return cartesJouables;
 	}
 
-	/**
-	 * @param cartesJouables
-	 * @param cartesNormalesJouables
-	 * @return la carte à poser
-	 */
 	public Carte determinerCarteAposer(ArrayList<Carte> cartesJouables,
 			ArrayList<Carte> cartesNormalesJouables) {
 		Carte carteAPoser = null;
@@ -203,10 +204,6 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		return carteAPoser;
 	}
 
-	/**
-	 * @param cartesJouables
-	 * @return une arraylist des cartes normales jouables
-	 */
 	public ArrayList<Carte> determinerCartesNormalesJouables(
 			ArrayList<Carte> cartesJouables) {
 		ArrayList<Carte> cartesNormalesJouables = new ArrayList<Carte>();
@@ -220,11 +217,6 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		return cartesNormalesJouables;
 	}
 
-	/**
-	 * @param carteAPoser
-	 * @param cartesJouables
-	 * @return une arraylist des cartes à poser
-	 */
 	public ArrayList<Carte> determinerCartesAPoser(Carte carteAPoser,
 			ArrayList<Carte> cartesJouables) {
 		ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
@@ -238,10 +230,6 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		return cartesAPoser;
 	}
 
-	/**
-	 * @param joueur
-	 * @return un boolean qui est vrai si le joueur réel peut contrer l'As
-	 */
 	public boolean peutContrerAs(Joueur joueur) {
 		boolean peutContrer = false;
 		ListIterator<Carte> it = joueur.getmain().listIterator();
@@ -254,10 +242,6 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		return peutContrer;
 	}
 
-	/**
-	 * @param main
-	 * @return la carte pour contrer l'As
-	 */
 	public Carte determinerCartePourContrer(ArrayList<Carte> main) {
 		Carte cartePourContrer = null;
 		ListIterator<Carte> it = main.listIterator();
@@ -270,12 +254,6 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		return cartePourContrer;
 	}
 
-	/**
-	 * @param joueurQuiContre
-	 * @param joueurContre
-	 * @param cartePourContrer
-	 * @return un boolean qui est vrai si l'As a été contré
-	 */
 	public boolean contrerAs(Joueur joueurQuiContre, Joueur joueurContre,
 			Carte cartePourContrer) {
 		boolean asContre = false;
@@ -284,12 +262,42 @@ public class StrategieLeMeilleurPourLaFin implements Strategie {
 		Partie.partie.getTasDeCarte().donnerTalon(
 				Partie.partie.getlistJoueur().get(
 						Partie.partie.getlistJoueur().indexOf(joueurContre)));
-		System.out.println(joueurQuiContre
-				+ " Ã  contrÃ© "
-				+ Partie.partie.getlistJoueur().get(
-						(Partie.partie.getlistJoueur().indexOf(joueurContre))));
+		//System.out.println(joueurQuiContre
+			//	+ " à contré "
+				//+ Partie.partie.getlistJoueur().get(
+					//	(Partie.partie.getlistJoueur().indexOf(joueurContre))));
 		joueurQuiContre.poserCarte(carteaposer);
 		piocher(1, joueurQuiContre);
 		return asContre;
 	}
-}
+	public void contreAs(Joueur joueur,Joueur j,ArrayList<Carte> carteAPoser){
+		Random random = new Random();
+		ArrayList<Carte> listAs = new ArrayList<Carte>();
+		ArrayList<Carte> listDeux = new ArrayList<Carte>();
+		
+			ListIterator<Carte> it = joueur.getmain().listIterator();
+			while (it.hasNext()){
+				Carte element=it.next();
+				if (element.estDeux() ){
+					listDeux.add(element);
+				}
+				if (element.estAs() ){
+					listAs.add(element);
+				}
+			}
+			if(listAs.isEmpty()){
+				joueur.poserCarte(listDeux);
+				
+			}
+			else{
+				joueur.poserCarte(listAs);
+			}
+			
+			
+			
+		
+		
+		
+	}
+	}
+	

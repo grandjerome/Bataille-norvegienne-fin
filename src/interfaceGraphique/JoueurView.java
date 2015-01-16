@@ -24,6 +24,10 @@ import net.miginfocom.swing.MigLayout;
 
 
 public class JoueurView extends JComponent{
+	/**
+	 * @author antoineladune
+	 * Classe JoueurView permettant de créer la vue des joueurs.
+	 */
 
 	
 	private JPanel ligneCarteVisible;
@@ -34,56 +38,71 @@ public class JoueurView extends JComponent{
 	private moteur.Joueur joueur;
 	private Image imageJoueur;
 	private static int conteurAfficheur=0;
-	
+	/**
+	 * Constructeur de la classe JoueurView créant lavue du joueur
+	 * 
+	 * 
+	 *@param joueur
+	 
+	 
+	 */
 	public JoueurView(moteur.Joueur joueur){
 		ligneCarteVisible=new JPanel();
-		//ligneCarteVisible.setLayout(new BoxLayout(ligneCarteVisible, BoxLayout.LINE_AXIS));
+
 		ligneCarteVisible.setLayout(new MigLayout("insets 0"));
 		ligneCarteVisible.setOpaque(false);
-		
-		
-		
-		
-		
-		//ligneCarteVisible.setBorder(new BevelBorder(BevelBorder.RAISED));
+
 		ligneMain=new JPanel();
-		
-		//ligneMain.setLayout(new BoxLayout(ligneMain, BoxLayout.LINE_AXIS));
-		//ligneMain.setBorder(new BevelBorder(BevelBorder.RAISED));
+
 		ligneMain.setOpaque(false);
-		//ligneMain.setLayout(new BoxLayout(ligneMain, BoxLayout.LINE_AXIS));
+
 		ligneMain.setLayout(new MigLayout("insets 0"));
 		
 		
 		
 		ligneJoueur=new JPanel();
-		//ligneJoueur.setLayout(new BorderLayout());
-		//ligneJoueur.setLayout(new MigLayout("insets 0"));
+
 		ligneJoueur.setLayout(new MigLayout("insets 0 20 5 0"));
 		ligneJoueur.setOpaque(false);
-		//ligneJoueur.setLayout(new BoxLayout(ligneJoueur, BoxLayout.LINE_AXIS));
-		//ligneJoueur.setBorder(new BevelBorder(BevelBorder.RAISED));
+
 		this.joueur=joueur;
 		
 		
 	}
-
+	/**
+	 * getter ligneCarteVisible
+	 * @return ligneCarteVisible
+	 * 
+	 */
 	public JPanel getLigneCarteVisible() {
 		return ligneCarteVisible;
 	}
 
 	
-
+	/**
+	 * getter ligneMain
+	 * @return ligneMain
+	 * 
+	 */
 	public JPanel getLigneMain() {
 		return ligneMain;
 	}
 	
 
 	
-
+	/**
+	 * getter ligneJoueur
+	 * @return ligneJoueur
+	 * 
+	 */
 	public JPanel getLigneJoueur() {
 		return ligneJoueur;
 	}
+	/**
+	 * methode affichant l'image du joueur
+	 * @param i
+	 * 
+	 */
 	public void setImageJoueur(int i){
 		if(i==1){
 			imageJoueur =Toolkit.getDefaultToolkit().getImage("images/joueurpetite.jpg");
@@ -97,13 +116,13 @@ public class JoueurView extends JComponent{
 			
 			ligneJoueur.validate();
 			ligneJoueur.repaint();
-			//System.out.println("joueurview : "+joueur.getNomJoueur());
+
 			
 		}else{
 			imageJoueur =Toolkit.getDefaultToolkit().getImage("images/ordipetite.png");
 			BackgroundPanel imagePanel = new BackgroundPanel(imageJoueur,2);
 			imagePanel.setOpaque(false);
-			//System.out.println("joueurview : "+this.joueur.getNomJoueur());
+
 			String intelligence;
 			if(((JoueurVirtuel) joueur).getStrat() instanceof StrategieAleatoire){
 				intelligence="- novice";
@@ -120,95 +139,83 @@ public class JoueurView extends JComponent{
 			ligneJoueur.repaint();
 		}
 	}
+	/**
+	 * methode affichant une carte en main
+	 * @param carte
+	 * 
+	 */
 	public void afficherCarteMain(CarteView carte){
 		if((ligneMain.getComponentCount()%3)==0 && ligneMain.getComponentCount()!=0){
 		ligneMain.add(carte,"wrap");
-		//carte.addMouseListener(Partie.partie.getController().getCarteListener());
+
 		if(Partie.partie.getController().getFenetreUniverselle() instanceof JeuDeCarteUniverselView){
 			Partie.partie.getController().getFenetreUniverselle().revalidate();
 			}
-//if(Partie.partie.getController().getFenetreUniverselle() instanceof JeuDeCarteUniverselView){
-//			
-//			Partie.partie.getController().getFenetreUniverselle().repaint();
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			Partie.partie.getController().getFenetreUniverselle().setSize(1100,600);
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			Partie.partie.getController().getFenetreUniverselle().setExtendedState(Partie.partie.getController().getFenetreUniverselle().MAXIMIZED_BOTH);
-//		}
-		//System.out.println(ligneMain.getComponentCount());
+
 		}
 		else{
 			ligneMain.add(carte);
-		//	carte.addMouseListener(Partie.partie.getController().getCarteListener());
+
 			if(Partie.partie.getController().getFenetreUniverselle() instanceof JeuDeCarteUniverselView){
 			Partie.partie.getController().getFenetreUniverselle().revalidate();
 			}
 		}
-			//			if(Partie.partie.getController().getFenetreUniverselle() instanceof JeuDeCarteUniverselView){
-//				
-//				Partie.partie.getController().getFenetreUniverselle().repaint();
-//				try {
-//					Thread.sleep(100);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				Partie.partie.getController().getFenetreUniverselle().setSize(1100,600);
-//				try {
-//					Thread.sleep(100);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				Partie.partie.getController().getFenetreUniverselle().setExtendedState(Partie.partie.getController().getFenetreUniverselle().MAXIMIZED_BOTH);
-//			}
-//			System.out.println(ligneMain.getComponentCount());
-//			
-//		}
-	//	moteur.Partie.partie.getController().getFenetreUniverselle().getContentPane().validate();
-	//	moteur.Partie.partie.getController().getFenetreUniverselle().getContentPane().repaint();
+
 
 		
 	}
+	/**
+	 * methode affichant une carte face visible
+	 * @param carte
+	 * 
+	 */
 	public void afficherCarteVisible(CarteView carte){
-		//carte.setOpaque(true);
+
 		ligneCarteVisible.add(carte);
-		//carte.addMouseListener(Partie.partie.getController().getCarteListener());
-		//ligneCarteVisible.validate();
+
 		ligneCarteVisible.repaint();
-		//ligneMain.validate();
+
 		ligneMain.repaint();
-		
-		//Partie.partie.getController().getFenetreUniverselle().repaint();
-	//	moteur.Partie.partie.getController().getFenetreUniverselle().getContentPane().validate();
-	//	moteur.Partie.partie.getController().getFenetreUniverselle().getContentPane().repaint();
+
 		
 	}
+	/**
+	 * methode retirant une carte de la min
+	 * @param carte
+	 * 
+	 */
 	public void enleverCarteMain(CarteView carte){
 		ligneMain.remove(carte);
-		//carte.removeMouseListener(Partie.partie.getController().getCarteListener());
+
 	}
+	/**
+	 * getter joueur
+	 * @param joueur
+	 * 
+	 */
 	public Joueur getJoueur(){
 		return(this.joueur);
 	}
+	/**
+	 * Surcharge de repaint pour prendre en charge la cascade de JComponents dans la fenetre
+	 * 
+	
+	 */
 	public void repaint() 
 	{ 
-//		repaint le component courant 
+
 	super.repaint(); 
-//		repaint tous les components qu'il possède 
+
 	for(int i = 0; i < this.getComponentCount(); i++) 
 	this.getComponent(i).repaint(); 
 	} 
+	/**
+	 * Methode échangeant les cartes selectionnées si possible
+	 * @param cartesMain
+	 * @param cartesVisible
+	 * 
+	
+	 */
 	public void echangerCarte(ArrayList<Carte> cartesMain,ArrayList<Carte> cartesVisible){
 		this.joueur.echangerCarte(cartesMain, cartesVisible);
 		this.ligneMain.remove(cartesMain.get(0).getCarteView());
@@ -222,6 +229,13 @@ public class JoueurView extends JComponent{
 		this.ligneCarteVisible.repaint();
 		this.ligneCarteVisible.validate();
 	}
+	/**
+	 * Methode permettant au joueur de jouer une carte
+	 * @param carteAJouer
+	 * @return carteJouee
+	 * 
+	
+	 */
 	public boolean jouerCarte(ArrayList<CarteView> carteAJouer){
 		ArrayList<Carte> listCarte = new ArrayList<Carte>();
 		boolean carteJouee=false;
@@ -229,16 +243,22 @@ public class JoueurView extends JComponent{
 		for(i=0;i<carteAJouer.size();i++){
 			listCarte.add(carteAJouer.get(i).getCarte());
 		}
-		//System.out.println("coco :"+carteAJouer);
+
 		Boolean test=joueur.verifierCarteIdentique(listCarte);
 		if(!(test)){
 			FenetreErreurCartesNonIdentiques();
 		}else{
 			carteJouee=this.joueur.poserCarte(listCarte);
 		}
-		//System.out.println(carteJouee);
+
 		return(carteJouee);
 	}
+	/**
+	 * Methode créant une fenetre en cas de cartes non echangeables
+	 * 
+	 * 
+	
+	 */
 	public void FenetreErreurCartesNonIdentiques(){
 		JDialog erreurFenetre = new JDialog();
 		erreurFenetre.setPreferredSize(new Dimension(200, 200));
@@ -250,6 +270,12 @@ public class JoueurView extends JComponent{
 		erreurFenetre.add(panel);
 		erreurFenetre.setVisible(true);
 	}
+	/**
+	 * Methode permettant de poser une carte
+	 * 
+	 * @param carte
+	
+	 */
 	public void poserCarte(CarteView carte){
 		carte.setOpaque(false);
 		Partie.partie.getController().getFenetreUniverselle().getTalon().removeAll();
@@ -261,6 +287,12 @@ public class JoueurView extends JComponent{
 		
 		
 	}
+	/**
+	 * Methode retournant le nombre de cartes selectionnées
+	 * 
+	 * @return nbselec
+	
+	 */
 	public int getNbCarteSelectionne(){
 		int nbselec=0;
 		int i;
@@ -271,6 +303,12 @@ public class JoueurView extends JComponent{
 		}
 		return(nbselec);
 	}
+	/**
+	 * Methode créant une fenetre en cas de cartes non jouable
+	 * 
+	 * 
+	
+	 */
 	public void FenetreErreurCartesNonJouable(){
 		JDialog erreurFenetre = new JDialog();
 		erreurFenetre.setPreferredSize(new Dimension(200, 200));

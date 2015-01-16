@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 public class JeuDeCarteController {
 	
+	/**
+	 * @author antoineladune
+	 * Classe JeuDeCarteController permettant de lier le moteur et l'interface graphique.
+	 */
+
 	private JeuDeCarteDemarrageView menuDemarrage;
 	private JeuDeCarteUniverselView fenetreUniverselle;
 	private DemarrageListener demaListener;
@@ -28,11 +33,17 @@ public class JeuDeCarteController {
 	
 	
 	
-	
+	/**
+	 * Constructeur de la classe Controller.
+	 * Initialise les paramètres JeuDeCarteDemarrageView et ajoute les listeners.
+	 * 
+	 * @param menuDemarrage
+	 
+	 */
 	public JeuDeCarteController(JeuDeCarteDemarrageView menuDemarrage){
 		this.menuDemarrage=menuDemarrage;
-		//this.fenetreUniverselle=fenetreUniverselle;
-		//this.theView.setTestField(0);
+
+		
 		demaListener = new DemarrageListener(this.menuDemarrage);
 		fenUniListener = new FenetreUniverselleListener(this.fenetreUniverselle);
 		carteListener = new CarteListener(this.fenetreUniverselle);
@@ -41,11 +52,15 @@ public class JeuDeCarteController {
 		this.menuDemarrage.addJouerListener(demaListener);
 		this.menuDemarrage.addCommencerListener(demaListener);
 		this.menuDemarrage.addReglesListener(demaListener);
-		//this.fenetreUniverselle.setListJoueur(listJoueur);
+
 		
 		
 		
 	}
+	/** 
+	 * Méthode gérant la création des listeners de la fenetre principale.
+	 * 
+	 */
 	public void creationListenerUniversel(){
 		this.fenetreUniverselle.addPiocherListener(fenUniListener);
 		this.fenetreUniverselle.addEchangerListener(fenUniListener);
@@ -61,7 +76,12 @@ public class JeuDeCarteController {
 		
 	}
 	
-	
+	/** 
+	 * Méthode permettant d'ajouter une vue du joueur
+	 * @param joueur
+	 * @param i
+	 * 
+	 */
 	public void ajouterJoueurView(Joueur joueur,int i){
 		JoueurView joueurvi= new JoueurView(joueur);
 		joueur.setJoueurView(joueurvi);
@@ -72,13 +92,19 @@ public class JeuDeCarteController {
 		
 		
 	}
+	/** 
+	 * Méthode permettant d'ajouter une vue des cartes
+	 * @param carte
+	
+	 * 
+	 */
 	public void ajouterCarteView(Carte carte){
 		switch(carte.getValeur()){
 			
 			case 1:switch (carte.getCouleur()){
 			case "carreau":CarteView carteview = new CarteView(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("images/Diamonds 2.png")),carte);
 			carte.setCarteView(carteview);
-			//carteview.setOpaque(false);
+
 			break;
 			case "coeur":CarteView carteview1 = new CarteView(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("images/Hearts 2.png")),carte);
 			carte.setCarteView(carteview1);
@@ -272,33 +298,75 @@ public class JeuDeCarteController {
 			}
 			break;
 		}
-		//this.fenetreUniverselle.validate();
-		//this.fenetreUniverselle.getFenetrePrincipal().validate();
+
 		
 	}
+	/** 
+	 * Méthode permettant d'afficher une carte de la main
+	 * @param carte
+	 * @param joueur
+	 * 
+	 */
 	public void afficherCarteMain(CarteView carte,JoueurView joueur){
 		joueur.afficherCarteMain(carte);
 		
 	}
+	/** 
+	 * Méthode permettant d'afficher une carte visible
+	 * @param carte
+	 * @param joueur
+	 * 
+	 */
 	public void afficherCarteVisible(CarteView carte,JoueurView joueur){
 		joueur.afficherCarteVisible(carte);
 		
 	}
+	/** 
+	 * Setter fenetre universelle
+	 * @param uniview
+	 * 
+	 */
 	public void setfenetreUniverselle(JeuDeCarteUniverselView uniview){
 		this.fenetreUniverselle=uniview;
 	}
+	/** 
+	 * getter listJoueur
+	 * @return listJoueur
+	 * 
+	 */
 	public ArrayList<JoueurView> getListJoueur(){
 		return(listJoueur);
 	}
+	/** 
+	 * getter fenetreUniverselle
+	 * @return fenetreUniverselle
+	 * 
+	 */
 	public JeuDeCarteUniverselView getFenetreUniverselle(){
 		return(this.fenetreUniverselle);
 	}
+	/** 
+	 * getter CarteListener
+	 * @return carteListener
+	 * 
+	 */
 	public CarteListener getCarteListener(){
 		return (this.carteListener);
 	}
+	/** 
+	 * getter fenUniListener
+	 * @return fenUniListener
+	 * 
+	 */
 	public FenetreUniverselleListener getFenUniListener(){
 		return (this.fenUniListener);
 	}
+	/** 
+	 * Méthode permettant d'afficher la fenetre de fin de partie
+	 * @param gagne
+	 * 
+	 * 
+	 */
 	public void afficherGagnantFenetre(boolean gagne){
 		JDialog gagnefen = new JDialog();
 		gagnefen.setPreferredSize(new Dimension(200, 200));
@@ -316,6 +384,11 @@ public class JeuDeCarteController {
 		gagnefen.add(panel);
 		gagnefen.setVisible(true);
 	}
+	/** 
+	 * Méthode permettant d'afficher la fenetre pour contrer l'as
+	 
+	 * 
+	 */
 	public void fenetreContreAs(){
 		asContreFenetre = new JDialog();
 		asContreFenetre.setPreferredSize(new Dimension(200, 200));
@@ -356,6 +429,11 @@ public class JeuDeCarteController {
 		asContreFenetre.add(panel);
 		asContreFenetre.setVisible(true);
 	}
+	/** 
+	 * Méthode permettant d'afficher la fenetre pour donner l'as
+	 
+	 * 
+	 */
 	public void fenetreAs(){
 		asFenetre = new JDialog();
 		asFenetre.setPreferredSize(new Dimension(200, 200));
@@ -386,32 +464,78 @@ public class JeuDeCarteController {
 		asFenetre.setVisible(true);
 		
 	}
+	/** 
+	 * getter listJoueurAs
+	 * @return listJoueurAs
+	 * 
+	 */
 	public JList getListJoueurAs(){
 		return(listJoueurAs);
 	}
+	/** 
+	 * getter listModel
+	 * @return listModel
+	 * 
+	 */
 	public DefaultListModel getListModel(){
 		return(listModel);
 	}
+	/** 
+	 * getter asFenetre
+	 * @return asFenetre
+	 * 
+	 */
 	public JDialog getFenetreAs(){
 		return(asFenetre);
 	}
-	
+	/** 
+	 * getter listJoueurAs
+	 * @return listJoueurAs
+	 * 
+	 */
 	public JList getListJoueurContreAs(){
 		return(listJoueurAs);
 	}
+	/** 
+	 * getter listModelContre
+	 * @return listModelContre
+	 * 
+	 */
 	public DefaultListModel getListModelContre(){
-		return(listModel);
+		return(listModelContre);
 	}
+	/** 
+	 * getter asContreFenetre
+	 * @return asContreFenetre
+	 * 
+	 */
 	public JDialog getFenetreContreAs(){
 		return(asContreFenetre);
 	}
+	/** 
+	 * getter tableauIndexContreAs
+	 * @return tableauIndexContreAs
+	 * 
+	 */
 	public int[] getTabContre(){
 		return(this.tableauIndexContreAs);
 	}
+	/** 
+	 * Méthode permettant de faire sortie un joueur virtuel du jeu
+	 * @param joueur
+	 * 
+	 * 
+	 */
 	public void sortirJoueurVirtuel(Joueur joueur){
 		JLabel sorti = new JLabel("A fini");
 	joueur.getJoueurView().getLigneJoueur().add(sorti);
 	}
+	/** 
+	 * Méthode permettant d'ajouter un listener de type MouseListener sur une carte
+	 * @param carte
+	
+	 * 
+	 */
 	public void ajouterMouseListener(Carte carte){
 		carte.getCarteView().addMouseListener(Partie.partie.getController().getCarteListener());
 		

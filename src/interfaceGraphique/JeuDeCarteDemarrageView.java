@@ -22,6 +22,10 @@ import moteur.*;
 import controller.*;
 
 public class JeuDeCarteDemarrageView extends JFrame{
+/**
+ * @author antoineladune
+ * Classe JeuDeCarteDemarrageView permettant de créer la fenetre de demarrage
+ */
 
 	private JButton jouer = new JButton("Jouer!");
 	private JButton nom = new JButton("Entrer un nom");
@@ -38,18 +42,22 @@ public class JeuDeCarteDemarrageView extends JFrame{
 	private Font Action_Man;
 	private Font rosewood;
 	private Font Dragon;
-	
-	
-	//private JMenuBar menubar =new JMenuBar();
-	//private JMenu menu1=new JMenu("Partie");
-	
+
+	/**
+	 * Constructeur de la classe JeuDeCarteDemarrageView créant la fenetre de demarrage
+	 * 
+	 * 
+	 *
+	 
+	 
+	 */
 	public JeuDeCarteDemarrageView(){
 		 try {
-             //create the font to use. Specify the size!
+
 			 URL font_path = getClass().getResource("/Action_Man.ttf");
 			 Action_Man = Font.createFont(Font.TRUETYPE_FONT, font_path.openStream()).deriveFont(Font.PLAIN, 20);
              GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-             //register the font
+
              ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, font_path.openStream()));
          } catch (IOException e) {
              e.printStackTrace();
@@ -61,11 +69,11 @@ public class JeuDeCarteDemarrageView extends JFrame{
 
 
 		 try {
-             //create the font to use. Specify the size!
+
 			 URL font_path2 = getClass().getResource("/RosewoodStd-Regular.otf");
 			 rosewood = Font.createFont(Font.TRUETYPE_FONT, font_path2.openStream()).deriveFont(Font.PLAIN, 60);
              GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-             //register the font
+
              ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, font_path2.openStream()));
          } catch (IOException e) {
              e.printStackTrace();
@@ -75,11 +83,11 @@ public class JeuDeCarteDemarrageView extends JFrame{
              e.printStackTrace();
          }
 		 try {
-             //create the font to use. Specify the size!
+
 			 URL font_path3 = getClass().getResource("/Dragon is coming.otf");
 			 Dragon = Font.createFont(Font.TRUETYPE_FONT, font_path3.openStream()).deriveFont(60f);
              GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-             //register the font
+
              ge.registerFont( Font.createFont(Font.TRUETYPE_FONT, font_path3.openStream()));
          } catch (IOException e) {
              e.printStackTrace();
@@ -121,67 +129,135 @@ public class JeuDeCarteDemarrageView extends JFrame{
 		
 		
 	}
+	/**
+	 * setter bouton jouer
+	 * 
+	 
+	 
+	 */
 	public void setJouerBouton(JPanel fenetreDebut){
 		jouer.setFont(Action_Man);
 		jouer.setPreferredSize(new Dimension(200, 50));
 		
 		fenetreDebut.add(jouer, BorderLayout.CENTER);
 	}
+	/**
+	 * setter bouton nom
+	 * 
+	 
+	 
+	 */
 	public void setNomBouton(JPanel fenetreDebut){
 		nom.setFont(Action_Man);
 		nom.setPreferredSize(new Dimension(200, 50));
 		fenetreDebut.add(nom, BorderLayout.CENTER);
 	}
+	/**
+	 * setter bouton regles
+	 * 
+	 
+	 
+	 */
 	public void setReglesBouton(JPanel fenetreDebut){
 		regles.setFont(Action_Man);
 		regles.setPreferredSize(new Dimension(200, 50));
 		fenetreDebut.add(regles, BorderLayout.CENTER);
 	}
+	/**
+	 * setter label bienvenu
+	 * 
+	 
+	 
+	 */
 	public void setBienvenuLabel(JPanel fenetreDebut){
 		bienvenu.setFont(Dragon);
 		bienvenu.setPreferredSize(new Dimension(200, 100));
 		bienvenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		fenetreDebut.add(bienvenu,BorderLayout.CENTER);
 	}
+	/**
+	 * setter label bataille norvegienne
+	 * 
+	 
+	 
+	 */
 	public void setBatailleNorvLabel(JPanel fenetreDebut){
 		batailleNorv.setFont(rosewood);
 		batailleNorv.setForeground(new Color(0x790000));
-		//batailleNorv.setSize(1000, 1000);
-		//batailleNorv.setPreferredSize(new Dimension(200, 50));
+
 		batailleNorv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		fenetreDebut.add(batailleNorv, BorderLayout.PAGE_START);
 	}
+	/**
+	 * setter nom
+	 * 
+	 
+	 
+	 */
 	public void setNom(String nom){
 		bienvenu.setText("Bienvenue "+nom);
 	}
-	
+	/**
+	 * methode ajoutant un listener au bouton nom
+	 * 
+	 @param listenerForButton
+	 
+	 */
 	public void addNomListener(ActionListener listenerForButton){
 		nom.addActionListener(listenerForButton);
 		nom.setActionCommand("Nom");
 	}
+	/**
+	 * methode ajoutant un listener au bouton envoyer
+	 * 
+	 @param listenerForButton
+	 
+	 */
 	public void addEnvoyerListener(ActionListener listenerForButton){
 		envoyer.addActionListener(listenerForButton);
 		envoyer.setActionCommand("Envoyer");
 	}
+	/**
+	 * methode ajoutant un listener au bouton jouer
+	 * 
+	 @param listenerForButton
+	 
+	 */
 	public void addJouerListener(ActionListener listenerForButton){
 		jouer.addActionListener(listenerForButton);
 		jouer.setActionCommand("Jouer");
 	}
+	/**
+	 * methode ajoutant un listener au bouton commencer
+	 * 
+	 @param listenerForButton
+	 
+	 */
 	public void addCommencerListener(ActionListener listenerForButton){
 		commencer.addActionListener(listenerForButton);
 		commencer.setActionCommand("Commencer");
 	}
+	/**
+	 * methode ajoutant un listener au bouton regles
+	 * 
+	 @param listenerForButton
+	 
+	 */
 	public void addReglesListener(ActionListener listenerForButton){
 		regles.addActionListener(listenerForButton);
 		regles.setActionCommand("Regles");
 	}
+	/**
+	 * methode créant la fenetre de regles
+	 * 
+	 
+	 
+	 */
 	public void creerFenetreRegles(){
 		reglesFrame = new JFrame();
 		Image img =Toolkit.getDefaultToolkit().getImage(getClass().getResource("/regles.jpg"));
 		BackgroundPanel fenetreDebut =new BackgroundPanel(img,2);
-		
-		//reglesFrame.setPreferredSize(new Dimension(300, 100));
-		//demandeJoueurPanel.add(combienJoueur);
+
 		
 		reglesFrame.setExtendedState(this.MAXIMIZED_BOTH);
 		reglesFrame.add(fenetreDebut);
@@ -190,6 +266,12 @@ public class JeuDeCarteDemarrageView extends JFrame{
 		reglesFrame.setVisible(true);
 		
 	}
+	/**
+	 * methode créant la fenetre de demande du nombre de joueur
+	 * 
+	 
+	 
+	 */
 	public void creerFenetreDemandeNbJoueur(){
 		demandeNbJoueur = new JFrame();
 		JPanel demandeJoueurPanel =new JPanel();
@@ -205,6 +287,12 @@ public class JeuDeCarteDemarrageView extends JFrame{
 		demandeNbJoueur.setVisible(true);
 		
 	}
+	/**
+	 * methode créant la fenetre de demande du nom
+	 * 
+	 
+	 
+	 */
 	public void creerFenetreDemandeNom(){
 		
 		demandeNom =new JFrame();
@@ -222,18 +310,42 @@ public class JeuDeCarteDemarrageView extends JFrame{
 		demandeNom.setVisible(true);
 		
 	}
+	/**
+	 * getter nomtape
+	 * 
+	 
+	 @return nomtape
+	 */
 	public String getNomTape(){
 		return(nomtape.getText());
 	}
+	/**
+	 * getter entrerNbJoueur
+	 * 
+	 
+	 @return entrerNbJoueur
+	 */
 	public int getNbJoueurEntre(){
 		return(((Integer)entrerNbJoueur.getValue()));
 	}
+	/**
+	 * methode fermant la fenetre de demande du nom
+	 * 
+	 
+	 
+	 */
 	public void fermerDemandeNom(){
 		demandeNom.dispose();
 	}
+	/**
+	 * methode fermant la fenetre de demande du nombre de joueur
+	 * 
+	 
+	 
+	 */
 	public void fermerDemandeNbJoueur(){
 		demandeNbJoueur.dispose();
 	}
-//
+
 }
 

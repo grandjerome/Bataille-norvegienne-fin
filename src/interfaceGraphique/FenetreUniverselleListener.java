@@ -20,17 +20,36 @@ import moteur.Partie;
 
 
 public class FenetreUniverselleListener implements ActionListener{
+	/**
+	 * @author antoineladune
+	 * Classe FenetreUniverselleListener permettant de gerer les actions effectuées sur les boutons dans la fenetre universelle.
+	 */
 
 		private JeuDeCarteUniverselView fenetreUniverselle;
 		private JLabel label = new JLabel();
 		Thread jouer;
 		Thread talon;
-	
+		/**
+		 * Constructeur de la classe FenetreUniverselleListener.
+		 * Initialise le paramètre fenetreUniverselle .
+		 * 
+		 * @param fenetreUniverselle
+		 
+		 
+		 */
 	public FenetreUniverselleListener(JeuDeCarteUniverselView fenetreUniverselle){
 		this.fenetreUniverselle=fenetreUniverselle;
 		
 		
 	}
+	/**
+	 * Methode permettant de gérer les cliques sur l'objet passé en parametre
+	 * 
+	 * 
+	 * @param e
+	 
+	 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		label.setText("Count of listeners: " + ((JButton) e.getSource()).getActionListeners().length);
 		if(e.getActionCommand().contains("Piocher")){
@@ -96,7 +115,7 @@ public class FenetreUniverselleListener implements ActionListener{
 				if(selectionne){
 			jouer=new Thread(){
 				public void run(){
-					//System.out.println("test8");
+
 				
 			int i;
 			ArrayList<CarteView> listCarteMain = new ArrayList<CarteView>();
@@ -105,14 +124,12 @@ public class FenetreUniverselleListener implements ActionListener{
 					listCarteMain.add(((CarteView) fenetreUniverselle.getListJoueur().get(0).getLigneMain().getComponent(i)));
 				}
 			}
-			//System.out.println("test9");
+
 			
 			if(fenetreUniverselle.getListJoueur().get(0).jouerCarte(listCarteMain)){
-				//System.out.println("test 5");
-				//fenetreUniverselle.getListJoueur().get(0).getJoueur().setJoue(true);
-				//System.out.println(fenetreUniverselle.getListJoueur().get(0).getJoueur().estJoue());
+
 				 synchronized(moteur.Partie.monitor){
-					// System.out.println("test 6");
+
 				 Partie.monitor.notifyAll();
 				 }
 			}
@@ -163,7 +180,7 @@ public class FenetreUniverselleListener implements ActionListener{
 							if(Partie.partie.getController().getListJoueur().get(0).getJoueur().getmain().get(j).toString()==Partie.partie.getController().getListJoueurContreAs().getSelectedValue().toString()){
 								if(Partie.partie.getController().getListJoueur().get(0).getJoueur().getmain().get(j) instanceof Deux ||Partie.partie.getController().getListJoueur().get(0).getJoueur().getmain().get(j) instanceof As){
 									collecCarte.add(Partie.partie.getController().getListJoueur().get(0).getJoueur().getmain().get(j));
-									//System.out.println("toutou");
+
 									
 								}
 							}
@@ -172,9 +189,7 @@ public class FenetreUniverselleListener implements ActionListener{
 						Partie.partie.getController().getListJoueur().get(0).getJoueur().poserCarte(collecCarte);
 						}
 						Partie.partie.getController().getFenetreContreAs().dispose();
-//						synchronized(Partie.partie.monitorAs){
-//							Partie.partie.monitorAs.notifyAll();
-//						}
+
 					}
 				};t.start();
 				
@@ -193,6 +208,13 @@ public class FenetreUniverselleListener implements ActionListener{
 			
 		}
 	}
+	/**
+	 * Methode créant la fenetre d'affichage d'erreur de carte à echanger
+	 * 
+	 
+	 
+	 
+	 */
 	public void afficherErreurFenetreEchange(){
 		JDialog erreurFenetre = new JDialog();
 		erreurFenetre.setPreferredSize(new Dimension(200, 200));
@@ -204,9 +226,25 @@ public class FenetreUniverselleListener implements ActionListener{
 		erreurFenetre.add(panel);
 		erreurFenetre.setVisible(true);
 	}
+	/**
+	 * Setter fenetreUniverselle
+	 
+	 * 
+	 * @param fenetreUniverselle
+	 
+	 
+	 */
 	public void setfenetreUniverselle(JeuDeCarteUniverselView fenetreUniverselle){
 		this.fenetreUniverselle=fenetreUniverselle;
 	}
+	/**
+	 * Getter du Thread
+	 * 
+	 * 
+	 * @return fenetreUniverselle
+	 
+	 
+	 */
 	public Thread getThread(){
 		return(jouer);
 	}

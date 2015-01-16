@@ -4,156 +4,175 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ListIterator;
 
-/**
- * @author Naomi Sakine et Antoine Ladune
- *Classe StrategieAleatoire, stratégie qui joue une carte au hasard parmi
- *les cartes jouables de la main du joueur virtuel 
- */
 public class StrategieAleatoire implements Strategie {
-	/* (non-Javadoc)
-	 * @see moteur.Strategie#poserCarteStrategique(moteur.JoueurVirtuel)
-	 */
-	public void poserCarteStrategique(JoueurVirtuel j) {
-		ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
-		ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
-		Random random = new Random();
-		Carte carteAPoser = null;
-		System.out.println("--------main de " + j + " : "
-				+ j.getmain().toString());
-		cartesJouables = determinerCartesJouables(j.getmain());
-		System.out.println("-----cartes jouables : "
-				+ cartesJouables.toString());
+	private JoueurVirtuel jo;
 
-		if (cartesJouables.size() > 0) {
 
-			carteAPoser = determinerCarteAPoser(cartesJouables);
-			cartesAPoser = determinerCartesAPoser(carteAPoser, cartesJouables);
+	public void poserCarteStrategique( JoueurVirtuel j) {
+		this.jo=j;
+	
+		Thread t = new Thread(){
+			public void run(){
+				
+			
+		 ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
+		 ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
+		 Random random = new Random();
+		 Carte carteAPoser=null;
+		// System.out.println("--------main de "+jo+" : "+jo.getmain().toString());
+		 cartesJouables = determinerCartesJouables(jo.getmain());		 
+		 //System.out.println("-----cartes jouables : "+cartesJouables.toString());
 
-			if (carteAPoser.estAs()) {
-
+		 if (cartesJouables.size()>0){
+			 
+			 	carteAPoser=determinerCarteAPoser(cartesJouables);
+			 	cartesAPoser=determinerCartesAPoser(carteAPoser, cartesJouables);
+			
+			
+			
+			if (carteAPoser.estAs()){
+				
 				int i = random.nextInt(Partie.partie.getlistJoueur().size());
-				Joueur joueurRecupereTalon = Partie.partie.getlistJoueur().get(
-						i);
-				System.out.println("joueur recupere talon :  "
-						+ joueurRecupereTalon);
-				while (joueurRecupereTalon.getNom(joueurRecupereTalon) == j
-						.getNom(j)) {
-					i = random.nextInt(Partie.partie.getlistJoueur().size());
-					joueurRecupereTalon = Partie.partie.getlistJoueur().get(i);
+				
+				Joueur joueurRecupereTalon=Partie.partie.getlistJoueur().get(i);
+				if(!(joueurRecupereTalon instanceof JoueurVirtuel)){
+					jo.poserCarte(cartesAPoser);
+					Partie.partie.getController().fenetreContreAs();
+//					synchronized(Partie.partie.monitorAs){
+//					try {
+//						wait();
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					}
+				}else if (peutContrerAs(joueurRecupereTalon)){
+					contreAs(joueurRecupereTalon,jo,cartesAPoser);
+					
+				}else{
+					jo.poserCarte(cartesAPoser);
+					Partie.partie.getTasDeCarte().donnerTalon(Partie.partie.getlistJoueur().get(i));
+					
 				}
-				System.out.println("joueur recupere talon :  "
-						+ joueurRecupereTalon);
-				ListIterator<Carte> it = cartesAPoser.listIterator();
-				while (it.hasNext()) {
-					Carte element = it.next();
-					Partie.partie.getTasDeCarte().getTalon().add(element);
-					j.getmain().remove(element);
-				}
-
-				if (joueurRecupereTalon instanceof Joueur
-						&& peutContrerAs(joueurRecupereTalon)) {
-					As carte = (As) carteAPoser;
-					carte.contreAs(joueurRecupereTalon);
-				}
-
-				Partie.partie.getTasDeCarte().donnerTalon(
-						Partie.partie.getlistJoueur().get(
-								(Partie.partie.getlistJoueur()
-										.indexOf(joueurRecupereTalon))));
-				System.out.println(j
-						+ " donne le talon Ã  "
-						+ Partie.partie.getlistJoueur().get(
-								(Partie.partie.getlistJoueur()
-										.indexOf(joueurRecupereTalon))));
-				piocher(cartesAPoser.size(), j);
-			} else {
-				j.poserCarte(cartesAPoser);
-				piocher(cartesAPoser.size(), j);
+//				System.out.println("joueur recupere talon :  "+joueurRecupereTalon);
+//				while (joueurRecupereTalon.getNom(joueurRecupereTalon)==j.getNom(j)){
+//					i = random.nextInt(Partie.partie.getlistJoueur().size());
+//					joueurRecupereTalon=Partie.partie.getlistJoueur().get(i);
+//				}
+//				System.out.println("joueur recupere talon :  "+joueurRecupereTalon);		
+//				ListIterator<Carte> it = cartesAPoser.listIterator();
+//				while (it.hasNext()){
+//					Carte element = it.next();
+//					Partie.partie.getTasDeCarte().getTalon().add(element);
+//					j.getmain().remove(element);
+//				}	
+//				
+//				if (joueurRecupereTalon instanceof Joueur && peutContrerAs(joueurRecupereTalon)){
+//					As carte=(As)carteAPoser;
+//					carte.contreAs(joueurRecupereTalon);					
+//				}
+//				
+//				Partie.partie.getTasDeCarte().donnerTalon(Partie.partie.getlistJoueur().get((Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon))));
+//				System.out.println(j+" donne le talon à "+Partie.partie.getlistJoueur().get((Partie.partie.getlistJoueur().indexOf(joueurRecupereTalon))));
+//				piocher(cartesAPoser.size(), j);
+			
 			}
-		} else {
-			System.out.println("L'ordi ne peut pas jouer!");
-			Partie.partie.getTasDeCarte().donnerTalon(j);
-		}
-	}
+			else {
+				jo.poserCarte(cartesAPoser);
+				
+				
+			}
+		 }
+		 else {
+			 System.out.println("L'ordi ne peut pas jouer!");
+			 Partie.partie.getTasDeCarte().donnerTalon(jo);
+			 
+		 }
+		}};t.start();
 
-	/* (non-Javadoc)
-	 * @see moteur.Strategie#echangerCarte(moteur.JoueurVirtuel)
-	 */
-	public void echangerCarte(JoueurVirtuel j) {
+		 
 	}
-
-	/* (non-Javadoc)
-	 * @see moteur.Strategie#piocher(int, moteur.Joueur)
-	 */
-	public void piocher(int nbCartesPosees, Joueur j) {
-		for (int i = 0; i < nbCartesPosees; i++) {
-			if (j.getmain().size() < 3) {
+	
+	public void echangerCarte(JoueurVirtuel j){		
+	}
+	
+	public void piocher(int nbCartesPosees,Joueur j){
+		for (int i=0; i<nbCartesPosees; i++){
+			if (j.getmain().size()<3){
 				j.piocher(1);
 			}
 		}
 	}
 
-	/**
-	 * @param main
-	 * @return une arraylist des cartes jouables
-	 */
-	public ArrayList<Carte> determinerCartesJouables(ArrayList<Carte> main) {
+	public ArrayList<Carte> determinerCartesJouables(ArrayList<Carte> main){
 		ArrayList<Carte> cartesJouables = new ArrayList<Carte>();
 		ListIterator<Carte> it = main.listIterator();
-		while (it.hasNext()) {
+		while (it.hasNext()){
 			Carte element = it.next();
-			if (element.determinerCarteJouable()) {
+			if (element.determinerCarteJouable()){
 				cartesJouables.add(element);
-			}
+			}			
 		}
+		//System.out.println("l'ordi peut jouer "+nbCartesJouables+" cartes");
 		return cartesJouables;
 	}
-
-	/**
-	 * @param cartesJouables
-	 * @return  la carte à poser
-	 */
-	public Carte determinerCarteAPoser(ArrayList<Carte> cartesJouables) {
+	
+	public Carte determinerCarteAPoser(ArrayList<Carte> cartesJouables){
 		Random random = new Random();
-		Carte carteAPoser = null;
-		int index = random.nextInt(cartesJouables.size());
-		carteAPoser = cartesJouables.get(index);
-		return carteAPoser;
+		Carte carteAPoser=null;
+	 	int index = random.nextInt(cartesJouables.size());
+	 	carteAPoser = cartesJouables.get(index);
+	 	return carteAPoser;
 	}
-
-	/**
-	 * @param carteAPoser
-	 * @param cartesJouables
-	 * @return une arraylist des cartes à poser
-	 */
-	public ArrayList<Carte> determinerCartesAPoser(Carte carteAPoser,
-			ArrayList<Carte> cartesJouables) {
+	
+	public ArrayList<Carte> determinerCartesAPoser(Carte carteAPoser, ArrayList<Carte> cartesJouables){
 		ArrayList<Carte> cartesAPoser = new ArrayList<Carte>();
-		ListIterator<Carte> it = cartesJouables.listIterator();
-		while (it.hasNext()) {
-			Carte element = it.next();
-			if (element.getValeur() == carteAPoser.getValeur()) {
-				cartesAPoser.add(element);
-			}
-		}
-		System.out
-				.println("------cartes Ã  poser : " + cartesAPoser.toString());
+	 	ListIterator<Carte> it = cartesJouables.listIterator();
+	 	while (it.hasNext()){
+	 		Carte element = it.next();
+	 		if (element.getValeur()==carteAPoser.getValeur()){
+	 			cartesAPoser.add(element);
+	 		}			
+	 	}
+	 //	System.out.println("------cartes à poser : "+cartesAPoser.toString());
 		return cartesAPoser;
 	}
-
-	/**
-	 * @param joueur
-	 * @return un boolean qui est vrai si le joueur réel peut contrer l'As
-	 */
-	public boolean peutContrerAs(Joueur joueur) {
-		boolean peutContrer = false;
+	public void contreAs(Joueur joueur,Joueur j,ArrayList<Carte> carteAPoser){
+		Random random = new Random();
+		ArrayList<Carte> listcontre = new ArrayList<Carte>();
+		int i = random.nextInt(1);
+		if(i==0){
+			ListIterator<Carte> it = joueur.getmain().listIterator();
+			while (it.hasNext()){
+				Carte element=it.next();
+				if (element.estDeux() || element.estAs()){
+					listcontre.add(element);
+				}
+			}
+			Carte carteaposer = determinerCarteAPoser(listcontre);
+			listcontre.clear();
+			listcontre.add(carteaposer);
+			joueur.poserCarte(listcontre);
+			
+		}else{
+			j.poserCarte(carteAPoser);
+			Partie.partie.getTasDeCarte().donnerTalon(joueur);
+		}
+		
+		
+	}
+	public boolean peutContrerAs(Joueur joueur){
+		boolean peutContrer=false;
 		ListIterator<Carte> it = joueur.getmain().listIterator();
-		while (it.hasNext()) {
-			Carte element = it.next();
-			if (element.estDeux() || element.estAs()) {
-				peutContrer = true;
+		while (it.hasNext()){
+			Carte element=it.next();
+			if (element.estDeux() || element.estAs()){
+				peutContrer=true;	
 			}
 		}
 		return peutContrer;
 	}
+
+	
+	
 }

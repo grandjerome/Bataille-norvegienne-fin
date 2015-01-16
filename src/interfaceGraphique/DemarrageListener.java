@@ -12,13 +12,33 @@ import moteur.Partie;
 
 
 public class DemarrageListener implements ActionListener{
+	/**
+	 * @author antoineladune
+	 * Classe DemarrageListener permettant de gerer les actions effectuées lors d'un clique sur un bouton.
+	 */
 
 	private JeuDeCarteDemarrageView menuDemarrage;
 	private JeuDeCarteUniverselView fenetreUniverselle;
+	/**
+	 * Constructeur de la classe DemarrageListener.
+	 * Initialise les paramètres menuDemarrage .
+	 * 
+	 * @param menuDemarrage
+	 
+	 
+	 */
 	public DemarrageListener(JeuDeCarteDemarrageView menuDemarrage){
 		this.menuDemarrage=menuDemarrage;
-		//this.fenetreUniverselle=FenetreUniverselle;
+
 	}
+	/**
+	 * methode gérant les actions effectuée lors d'un clique effectuée sur l'objet donné en parametre
+	 * 
+	 * 
+	 * @param e
+	 
+	 
+	 */
 	public void actionPerformed(ActionEvent e) {
 	if(e.getActionCommand().contains("Nom")){
 		menuDemarrage.creerFenetreDemandeNom();
@@ -41,20 +61,14 @@ public class DemarrageListener implements ActionListener{
 		Partie.partie.lancementPartie();
 		
 		fenetreUniverselle=JeuDeCarteUniverselView.getInstance();
-		//Partie.partie.getController().creationListenerUniversel();
-		//moteur.Partie.partie.getController().setfenetreUniverselle(fenetreUniverselle);
+
 		fenetreUniverselle.getFenetrePrincipal().validate();
 		fenetreUniverselle.revalidate();
 	
 		fenetreUniverselle.getContentPane().revalidate();
 		fenetreUniverselle.getContentPane().repaint();
 		fenetreUniverselle.repaint();
-		//fenetreUniverselle = new JeuDeCarteUniverselView();
-		
-		//fenetreUniverselle.validate();
-		
-		
-		//fenetreUniverselle.DemarrageFenetre();
+
 		
 		
 		

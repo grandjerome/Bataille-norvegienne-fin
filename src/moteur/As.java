@@ -9,16 +9,22 @@ import java.util.Scanner;
 import javax.swing.JSpinner.ListEditor;
 
 
-/**
- * @author Naomi Sakine et Antoine Ladune
- * Classe As représentant les as
- */
+
+
+
 public class As extends moteur.CarteSpeciale {
 
+/**
+ * @author antoineladune
+ * Classe As modélisant la carte spéciale As.
+ */
+
+	
+    
 	static boolean effetJoue;
 	/**
 	 * Constructeur de la classe As.
-	 * Initialise les paramÃ¨tres effetjoue,valeur et couleur de la carte.
+	 * Initialise les paramètres effetjoue,valeur et couleur de la carte.
 	 * 
 	 * @param valeurcarte
 	 * @param couleurcarte
@@ -30,41 +36,43 @@ public class As extends moteur.CarteSpeciale {
 		
 	}
 	/** 
-	 * MÃ©thode gÃ©rant l'effet de l'As
-	 * Demande Ã  qui donner le talon puis rempli la main du joueur en question avec le talon
-	 * Peut Ãªtre contrÃ©e par contraAs
+	 * Méthode gérant l'effet de l'As
+	 * Demande à qui donner le talon puis rempli la main du joueur en question avec le talon
+	 * Peut être contrée par contraAs
 	 * @see contreAs
 	 * 
 	 */
 	public void jouerEffet() {
+		
 		if(!(effetJoue)){
-		Scanner sc = new Scanner(System.in);
-		int i=1;
-		System.out.println("Ã  qui voulez vous donner le talon (numero)");
-		ListIterator<Joueur> it = Partie.partie.getlistJoueur().listIterator();
-		while (it.hasNext()){
-			Joueur element = it.next();
-			System.out.println(element+" "+(i));
-			i++;
-		}
-		System.out.println("?");
-		int joueur = sc.nextInt();
-		if (!(contreAs(Partie.partie.getlistJoueur().get(joueur-1)))){
-			Partie.partie.getTasDeCarte().donnerTalon(Partie.partie.getlistJoueur().get(joueur-1));
+			Partie.partie.getController().fenetreAs();
+//		Scanner sc = new Scanner(System.in);
+//		int i=1;
+//		System.out.println("à qui voulez vous donner le talon (numero)");
+//		ListIterator<Joueur> it = Partie.partie.getlistJoueur().listIterator();
+//		while (it.hasNext()){
+//			Joueur element = it.next();
+//			System.out.println(element+" "+(i));
+//			i++;
+//		}
+//		System.out.println("?");
+//		int joueur = sc.nextInt();
+//		if (!(contreAs(Partie.partie.getlistJoueur().get(joueur-1)))){
+//			Partie.partie.getTasDeCarte().donnerTalon(Partie.partie.getlistJoueur().get(joueur-1));
 			effetJoue=true;
-		}
+//		}
 		
 		}
 	}
 	/**
-	 * methode qui met effetJoue Ã  false
+	 * methode qui met effetJoue à false
 	 */
 	
 	public void resetEffet(){
 		effetJoue=false;
 	}
 	/**
-	 * Methode qui permet au joueur visÃ© de pouvoir contrer l'as si il a un deux ou un as
+	 * Methode qui permet au joueur visé de pouvoir contrer l'as si il a un deux ou un as
 	 * Demande quelle carte il veut jouer parmi les 2 et les As
 	 * @param joueur
 	 * @return
@@ -93,7 +101,7 @@ public class As extends moteur.CarteSpeciale {
 			if (carteContre.size()>0){
 								System.out.println("quelle carte voulez vous utiliser pour contrer ?");
 								for (int i=0; i<carteContre.size();i++){
-									System.out.println("carte nÂ° "+(i+1)+" : "+carteContre.get(i));
+									System.out.println("carte n° "+(i+1)+" : "+carteContre.get(i));
 								}
 								int nocarteajouer=0;
 								boolean boucle=true;
@@ -132,31 +140,29 @@ public class As extends moteur.CarteSpeciale {
 		
 		return contre;
 	}
-	
-	/**
-	 * @return
-	 */
 	public int lireClavierInt() {
+		
 		 Scanner sc = new Scanner(System.in);
 		int sortie=sc.nextInt();
+		//if(sortie!=1&&sortie!=2&&sortie!=3){
+		//	throw new InvalidNumberException();
+		//}
+		//if(sortie<1 || sortie>(main.size()+1)){
+			//throw new CarteInexistanteException();
+		//}
+		//if (sortie<0 ||sortie>4){
+		//	throw new DepassementCarteJouableException();
+		//}
 		return(sortie);
 	}
 	
-	/**
-	 * @param sortie
-	 * @param collec
-	 * @throws CarteInexistanteException
-	 */
 	public void controlCarteInexistante(int sortie,Collection collec)throws CarteInexistanteException{
 		if(sortie<0 || sortie>collec.size()){
 			throw new CarteInexistanteException();
 			}
 	}
-	
-	/* (non-Javadoc)
-	 * @see moteur.Carte#toString()
-	 */
 	public String toString(){
+		
 		return("As"+" de "+this.couleur);
 	}
 	

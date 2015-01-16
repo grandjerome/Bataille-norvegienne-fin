@@ -10,15 +10,23 @@ import javax.swing.JFrame;
 import moteur.Partie;
 
 public class CarteListener implements MouseListener{
-	
+	/**
+	 * @author antoineladune
+	 * Classe CarteListener permettant de gerer les actions effectuées sur les cartes.
+	 */
 	private JeuDeCarteUniverselView fenetrePrincipale;
 	@Override
+	/** 
+	 * Méthode permettant de gérer l'effet d'un clique de souris sur une carte
+	 * @param e
+	 *
+	 * 
+	 */
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		//if(e.getComponent().getBackground().equals(new Color(0x0000))){
+
 		if( e.getComponent().isOpaque()){
 			((CarteView) e.getComponent()).setOpaque(false);
-			//e.getComponent().setBackground(null);
+
 			((CarteView) e.getComponent()).setEtat(false);
 			Partie.partie.getController().getFenetreUniverselle().repaint();
 		}else{
@@ -32,27 +40,34 @@ public class CarteListener implements MouseListener{
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
+	/**
+	 * Constructeur de la classe CarteListener.
+	 * Initialise les paramètres JeuDeCarteDemarrageView .
+	 * 
+	 * @param fenetrePrincipale
+	 
+	 */
 	public CarteListener(JeuDeCarteUniverselView fenetrePrincipale){
 		this.fenetrePrincipale=fenetrePrincipale;
 	}

@@ -1,43 +1,55 @@
 package moteur;
 
+import interfaceGraphique.CarteView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
-
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-/**
- * @author Naomi Sakine et Antoine Ladune
- *	Classe carte représentant toutes les cartes du jeu
- */
 public class Carte {
-	protected int valeur;
-	protected String couleur;
-	private boolean carteJouable;
 
-	/**
-	 * Constructeur de la classe Carte
-	 * @param valeur
-	 * @param couleurcarte
-	 */
+	
+	
+	
+
+	protected int valeur;
+	
+
+	protected String couleur;
+	
+	
+	private boolean carteJouable;
+	private CarteView carteview;
+	
+	
+	
+	
+	
+	
+	
+		
+	
 	public Carte(int valeur,String couleurcarte){
 		this.couleur=couleurcarte;
-		this.valeur=valeur;		
+		this.valeur=valeur;
+		//System.out.println("je suis le "+this.valeur+" "+"de"+" "+this.couleur);
+		
 	}
 	public Carte(){
 		
 	}
-	/**
-	 * @return un boolean qui est vrai si la carte est jouable
-	 */
 	public boolean determinerCarteJouable() {
 		boolean cartejouable=true;
+		
+		//System.out.println(Partie.partie.getTasDeCarte().getTalon().size());
+		//System.out.println(Partie.partie.getTasDeCarte().getTalon().isEmpty());
 		if (!(Partie.partie.getTasDeCarte().getTalon().isEmpty())){
 			if(Partie.partie.getTasDeCarte().getTalon().get(Partie.partie.getTasDeCarte().getTalon().size()-1).getValeur()==6){
 				if(getValeur()>7){
 					cartejouable=false;
-					System.out.println("vous devez jouer une carte infÃ©rieure ou Ã©gale au 7 !");
+					System.out.println("vous devez jouer une carte inférieure ou égale au 7 !");
 				}
 			}
 			else if (getValeur() < Partie.partie.getTasDeCarte().getTalon().get(Partie.partie.getTasDeCarte().getTalon().size()-1).getValeur()){
@@ -48,25 +60,25 @@ public class Carte {
 					else {
 						cartejouable=true;
 					}}
-				else {cartejouable=false;}	
+				else {cartejouable=false;}
+				
+				
+				
 			}
 			
 		}
+		//System.out.println("carte jouable : "+cartejouable);
 		return(cartejouable);
+
 	}
 
 	
 
-	/**
-	 * @return la valeur de la carte
-	 */
 	public int getValeur() {
 		return valeur;
 	}
 
-	/**
-	 * @param valeur
-	 */
+	
 	public void setValeur(int valeur) {
 		this.valeur = valeur;
 	}
@@ -80,24 +92,18 @@ public class Carte {
 		return couleur;
 	}
 
-	/**
-	 * @return l'attribut carteJouable
-	 */
+	
+	
+
+
 	public boolean getCarteJouable() {
 		return carteJouable;
 	}
 
 
-	/**
-	 * @param carteJouable
-	 */
 	public void setCarteJouable(boolean carteJouable) {
 		this.carteJouable = carteJouable;
 	}
-	
-	/**
-	 * @return un boolean qui est vraie si la carte est une carte spéciale
-	 */
 	public boolean estCarteSpeciale(){
 		boolean cartespeciale=false;
 		if (this instanceof CarteSpeciale){
@@ -105,32 +111,23 @@ public class Carte {
 		}
 		return (cartespeciale);
 	}
-	
-	/**
-	 * @return un boolean qui est vrai si la carte est un As
-	 */
 	public boolean estAs(){
 		boolean cartespeciale=false;
 		if (this.getClass() == As.class){
 			cartespeciale=true;
+			//System.out.println("cest un 1");
 		}
 		return (cartespeciale);
 	}
-	
-	/**
-	 * @return un boolean qui est vrai si la carte est un Deux
-	 */
 	public boolean estDeux(){
 		boolean cartespeciale=false;
+		//System.out.println("2 en cours");
 		if (this.getClass() == Deux.class){
 			cartespeciale=true;
+			//System.out.println("cest un 2");
 		}
 		return (cartespeciale);
 	}
-	
-	/**
-	 * @return un boolean qui est vrai si la carte est un Sept
-	 */
 	public boolean estSept(){
 		boolean cartespeciale=false;
 		if (this.getClass() == Sept.class){
@@ -138,10 +135,6 @@ public class Carte {
 		}
 		return (cartespeciale);
 	}
-	
-	/**
-	 * @return un boolean qui est vrai si la carte est un Huit
-	 */
 	public boolean estHuit(){
 		boolean cartespeciale=false;
 		if (this.getClass() == Huit.class){
@@ -149,10 +142,6 @@ public class Carte {
 		}
 		return (cartespeciale);
 	}
-	
-	/**
-	 * @return un boolean qui est vrai si la carte est un Dix
-	 */
 	public boolean estDix(){
 		boolean cartespeciale=false;
 		if (this.getClass() == Dix.class){
@@ -161,11 +150,6 @@ public class Carte {
 		}
 		return (cartespeciale);
 	}
-	
-	/**
-	 * @param valeur
-	 * @return un chaine de caractères qui correspond a la valeur donnée paramètre
-	 */
 	public String chiffreEnNom(int valeur){
 		String nom=null;
 		switch(valeur){
@@ -212,12 +196,19 @@ public class Carte {
 		}
 		return(nom);
 	}
+	public void resetEffet(){
+		
+	}
+	public void setCarteView(CarteView carteview){
+		this.carteview=carteview;
+	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	public String toString(){
+		//System.out.println("valeur en chiffre : "+ this.valeur);
 		return(chiffreEnNom(this.valeur)+" de "+this.couleur);
+	}
+	public CarteView getCarteView(){
+		return (this.carteview);
 	}
 	
 
